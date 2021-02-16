@@ -55,6 +55,31 @@ namespace petshop.Controllers
         return BadRequest(err.Message);
       }
     }
+    [HttpPut("{id}")]
+    public ActionResult<Cat> Edit([FromBody] Cat editCat, string id)
+    {
+      try
+      {
+        Cat currentCat = FAKEDB.Cats.Find(c => c.Id == id);
+        if (editCat.Name != null)
+        {
+          currentCat.Name = editCat.Name;
+        }
+        if (editCat.Description != null)
+        {
+          currentCat.Description = editCat.Description;
+        }
+        if (editCat.Lives != null)
+        {
+          currentCat.Lives = editCat.Lives;
+        }
+        return currentCat;
+      }
+      catch (System.Exception err)
+      {
+        throw new System.Exception("invalid id");
+      }
+    }
 
 
     [HttpDelete("{catId}")]
